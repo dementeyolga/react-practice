@@ -1,0 +1,35 @@
+.bar {
+  position: relative;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  padding: 5px 10px;
+  width: 300px;
+  flex-shrink: 1;
+  display: flex;
+  height: 35px;
+  border-radius: 20px;
+}
+
+.button {
+  position: absolute;
+  right: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  transition: filter 0.2s;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(1.2);
+  }
+}
