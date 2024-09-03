@@ -1,42 +1,59 @@
 import { Component } from 'react';
+import clsx from 'clsx';
+import { swapi } from './services/swapiService';
+import type { SwapiCharacter } from './types/swapiTypes';
 import SearchBar from './components/SearchBar/SearchBar';
 import SearchResults from './components/SearchResults/SearchResults';
+import { swapiLocalStorage } from './services/localStorageService';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+import ErrorButton from './components/ErrorButton/ErrorButton';
 import s from './App.module.scss';
-import clsx from 'clsx';
-import { swapi } from './services/swapi';
-import { SwapiCharacter } from './types/swapiTypes';
 
 interface AppState {
   characters: SwapiCharacter[] | null;
 }
 
-class App extends Component<null, AppState> {
-  state: Readonly<AppState> = {
+export default class App extends Component<object, AppState> {
+  state: AppState = {
     characters: null,
   };
 
-  async componentDidMount(): Promise<void> {
-    const characters = await swapi.searchCharacters('');
+  private getCharacters = async (
+    searchValue: string,
+    page: string = '1',
+  ): Promise<void> => {
+    const characters = await swapi.searchCharacters(searchValue, page);
     this.setState({
       characters,
     });
+    swapiLocalStorage.setSearchValue(searchValue);
+  };
 
-    console.log(characters);
+  async componentDidMount(): Promise<void> {
+    const searchValue = swapiLocalStorage.getSearchValue();
+
+    if (searchValue) {
+      await this.getCharacters(searchValue);
+    } else {
+      await this.getCharacters('');
+    }
   }
 
   render() {
     return (
-      <div className={clsx(s.app, 'wrapper')}>
-        <div className={s.block}>
-          {this.state.characters?.map(({ name }) => <p key={name}>{name}</p>)}
-          <SearchBar />
+      <ErrorBoundary>
+        <div className={clsx(s.app, 'wrapper')}>
+          <div className={s.block}>
+            <SearchBar searchHandler={this.getCharacters} />
+          </div>
+          <div className={s.block}>
+            <ErrorButton />
+          </div>
+          <div className={s.block}>
+            <SearchResults results={this.state.characters} />
+          </div>
         </div>
-        <div className={s.block}>
-          <SearchResults />
-        </div>
-      </div>
+      </ErrorBoundary>
     );
   }
 }
-
-export default App;

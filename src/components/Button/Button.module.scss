@@ -1,0 +1,18 @@
+.button {
+  border: none;
+  outline: none;
+  height: 30px;
+  padding: 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-accent);
+  border-radius: 15px;
+  font-weight: 500;
+  transition: filter 0.2s;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(1.2);
+  }
+}

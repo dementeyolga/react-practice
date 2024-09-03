@@ -2,7 +2,7 @@ import { SwapiCharacter, swapiResponse } from '@/types/swapiTypes';
 import { createSearchQuery } from '@/utils/queryStringCreator';
 import axios from 'axios';
 
-class swapiService {
+class SwapiService {
   private readonly baseURL = 'https://swapi.dev/api/';
 
   async searchCharacters(
@@ -24,4 +24,4 @@ class swapiService {
   }
 }
 
-export const swapi = new swapiService();
+export const swapi = new SwapiService();
