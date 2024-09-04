@@ -2,8 +2,27 @@ import { Component } from 'react';
 import Button from '@components/Button/Button';
 import s from './ErrorButton.module.scss';
 
-export default class ErrorButton extends Component {
+interface State {
+  error: boolean;
+}
+
+export default class ErrorButton extends Component<object, State> {
+  state: State = {
+    error: false,
+  };
+
   render() {
-    return <Button className={s.errorBtn}>Throw an error!</Button>;
+    if (this.state.error) {
+      throw new Error('Error has happened');
+    }
+
+    return (
+      <Button
+        className={s.errorBtn}
+        onClick={() => this.setState({ error: true })}
+      >
+        Throw an error!
+      </Button>
+    );
   }
 }

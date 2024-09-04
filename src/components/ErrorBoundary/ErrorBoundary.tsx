@@ -1,6 +1,7 @@
 import { Component, ErrorInfo, ReactElement } from 'react';
-
+import Button from '../Button/Button';
 interface Props {
+  fallback: ReactElement;
   children?: ReactElement;
 }
 
@@ -25,7 +26,14 @@ export default class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      return <h2>Sorry, some error happened</h2>;
+      return (
+        <div className="wrapper block">
+          {this.props.fallback}
+          <Button onClick={() => this.setState({ hasError: false })}>
+            Recover
+          </Button>
+        </div>
+      );
     }
 
     return this.props.children;

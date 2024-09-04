@@ -15,10 +15,10 @@
   -moz-osx-font-smoothing: grayscale;
 
   --color-background-main: #242424;
-  --color-accent: #1c249b;
+  --color-accent: #232caf;
   --color-font: rgba(255, 255, 255, 0.87);
   --color-accent-light: #9ecaed;
-  --color-accent-error: #f8755e;
+  --color-accent-error: #d15a45;
 }
 
 a {
@@ -28,7 +28,7 @@ a {
 }
 
 body {
-  margin: 0;
+  margin: 60px 0 0;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -52,4 +52,11 @@ input {
   margin-left: auto;
   margin-right: auto;
   padding: 40px 3%;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 24px;
 }

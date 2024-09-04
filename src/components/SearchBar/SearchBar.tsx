@@ -4,7 +4,11 @@ import s from './SearchBar.module.scss';
 import { swapiLocalStorage } from '@/services/localStorageService';
 
 interface Props {
-  searchHandler: (searchValue: string, page?: string) => Promise<void>;
+  searchHandler?: (
+    searchValue: string,
+    page?: string,
+  ) => Promise<void> | undefined;
+  disabled?: true;
 }
 
 interface State {
@@ -24,7 +28,9 @@ export default class SearchBar extends Component<Props, State> {
 
   handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    this.props.searchHandler(this.state.searchValue.trim());
+    if (this.props.searchHandler) {
+      this.props.searchHandler(this.state.searchValue.trim());
+    }
   };
 
   render(): ReactNode {
@@ -37,8 +43,13 @@ export default class SearchBar extends Component<Props, State> {
           value={this.state.searchValue}
           className={s.input}
           onChange={this.handleInput}
+          disabled={this.props.disabled}
         />
-        <button type="submit" className={s.button}>
+        <button
+          type="submit"
+          className={s.button}
+          disabled={this.props.disabled}
+        >
           <img src={searchIcon} alt="" />
         </button>
       </form>
